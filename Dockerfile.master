@@ -1,0 +1,19 @@
+FROM python:3.6-alpine
+
+WORKDIR /app
+# RUN apk update && apk upgrade
+RUN apk add --no-cache py3-pip\
+                        python3-dev \
+                        gcc \
+                        libc-dev \
+                        musl-dev \
+                        g++ \
+    && rm -rf /var/cache/apk/*
+
+COPY requirements.txt .
+COPY master_app master_app
+RUN pip install -r requirements.txt 
+
+WORKDIR /app/master_app
+
+CMD ["python", "app.py"]

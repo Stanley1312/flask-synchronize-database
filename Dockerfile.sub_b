@@ -11,8 +11,9 @@ RUN apk add --no-cache py3-pip\
     && rm -rf /var/cache/apk/*
 
 COPY requirements.txt .
-COPY sub_app_b sub_app_b
 RUN pip install -r requirements.txt 
+COPY sub_app_b sub_app_b
+
 
 WORKDIR /app/sub_app_b
 

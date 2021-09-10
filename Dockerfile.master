@@ -11,8 +11,9 @@ RUN apk add --no-cache py3-pip\
     && rm -rf /var/cache/apk/*
 
 COPY requirements.txt .
-COPY master_app master_app
 RUN pip install -r requirements.txt 
+COPY master_app master_app
+
 
 WORKDIR /app/master_app
 

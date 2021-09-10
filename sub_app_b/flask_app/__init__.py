@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_socketio import SocketIO
 from config.config import DevelopmentConfig
 import os
 
@@ -12,8 +13,11 @@ def create_app(config_file):
     with app.app_context(): 
 
         db.create_all()
+    
+    socketio = SocketIO(app, cors_allowed_origins="*")
 
-    return app
+    return socketio, app
 
-app = create_app(DevelopmentConfig())
+
+socketio, app = create_app(DevelopmentConfig())
 from . import views

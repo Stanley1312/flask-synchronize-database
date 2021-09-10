@@ -1,9 +1,14 @@
 from flask import Flask
+import socketio
 from config.config import DevelopmentConfig
 import os
 
+
 def create_app(config_file):
     app = Flask(__name__)
+    sio = socketio.Server(logger=True)
+    app.wsgi_app = socketio.WSGIApp(sio, app.wsgi_app)
+
     app.config.from_object(config_file)
 
     from .models import db
@@ -13,7 +18,8 @@ def create_app(config_file):
 
         db.create_all()
 
-    return app
+    return sio, app
 
-app = create_app(DevelopmentConfig())
+
+sio, app = create_app(DevelopmentConfig())
 from . import views
